@@ -199,8 +199,11 @@ def preprocess_dataset(
 
     # The most recent row has no target (tomorrow has not happened yet),
     # so it is kept separately for the final prediction step.
-    latest_row = engineered_dataframe.iloc[[-1]][FEATURE_COLUMNS]
-
+    
+    feature_frame = engineered_dataframe[FEATURE_COLUMNS]
+    latest_valid_index = feature_frame.dropna().index[-1]
+    latest_row = engineered_dataframe.loc[[latest_valid_index], FEATURE_COLUMNS]
+    
     training_dataframe = engineered_dataframe.dropna().copy()
 
     validate_row_count(training_dataframe)
