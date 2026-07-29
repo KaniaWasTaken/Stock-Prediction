@@ -199,9 +199,7 @@ def preprocess_dataset(
 
     # The most recent row has no target (tomorrow has not happened yet),
     # so it is kept separately for the final prediction step.
-    latest_row = engineered_dataframe.iloc[[-1]].drop(
-        columns=[TARGET_COLUMN]
-    )
+    latest_row = engineered_dataframe.iloc[[-1]][FEATURE_COLUMNS]
 
     training_dataframe = engineered_dataframe.dropna().copy()
 
